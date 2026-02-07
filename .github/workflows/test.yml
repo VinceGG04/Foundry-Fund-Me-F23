@@ -17,25 +17,30 @@ jobs:
     permissions:
       contents: read
     steps:
+     
       - uses: actions/checkout@v5
         with:
           persist-credentials: false
           submodules: recursive
 
+      
       - name: Install Foundry
-       uses: foundry-rs/foundry-toolchain@v1
-       with:
-       version: stable
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable  # or nightly
 
-
+      
       - name: Show Forge version
         run: forge --version
 
+      
       - name: Run Forge fmt
         run: forge fmt --check
 
+  
       - name: Run Forge build
         run: forge build --sizes
 
+      # Run tests
       - name: Run Forge tests
         run: forge test -vvv
