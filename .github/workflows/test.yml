@@ -17,30 +17,34 @@ jobs:
     permissions:
       contents: read
     steps:
-     
+      # 1️⃣ Checkout the repository
       - uses: actions/checkout@v5
         with:
           persist-credentials: false
           submodules: recursive
 
-      
+      # 2️⃣ Install Foundry toolchain
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: stable  # or nightly
+          version: stable  # can pin a version if desired
 
-      
+      # 3️⃣ Verify Forge installation
       - name: Show Forge version
         run: forge --version
 
-      
-      - name: Run Forge fmt
+      # 4️⃣ Enforce Solidity formatting
+      - name: Check Solidity formatting
         run: forge fmt --check
 
-  
+      # Optional: automatically format code (comment out if enforcing)
+      # - name: Format Solidity code
+      #   run: forge fmt
+
+      # 5️⃣ Build the project and show contract sizes
       - name: Run Forge build
         run: forge build --sizes
 
-      # Run tests
+      # 6️⃣ Run tests with verbose output
       - name: Run Forge tests
         run: forge test -vvv
